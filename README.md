@@ -1,2 +1,3 @@
 # udemy-REACT-QUERY
-[Udemy] React Query : React로 서버 상태 관리하기
+
+Code to support the Udemy course [React Query: Server State Management in React](https://www.udemy.com/course/learn-react-query/?couponCode=REACT-QUERY-GITHUB)
