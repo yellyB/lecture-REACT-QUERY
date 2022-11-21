@@ -16,8 +16,15 @@ export function Posts() {
   const [selectedPost, setSelectedPost] = useState(null);
 
   // replace with useQuery
-  const { data } = useQuery("posts", fetchPosts); // 인자1: 쿼리 키, 인자2: 쿼리 함수
-  if (!data) return <div />;
+  const { data, isError, error, isLoading } = useQuery("posts", fetchPosts); // 인자1: 쿼리 키, 인자2: 쿼리 함수
+  if (isLoading) return <h3>Loading...</h3>;
+  if (isError)
+    return (
+      <>
+        <h3>oops, something went wrong</h3>
+        <p>{error.toString()}</p>
+      </>
+    ); // 세번 시도 후 에러로 판단
 
   return (
     <>
