@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useQuery } from "react-query";
 
 import { PostDetail } from "./PostDetail";
 const maxPostPage = 10;
@@ -15,7 +16,8 @@ export function Posts() {
   const [selectedPost, setSelectedPost] = useState(null);
 
   // replace with useQuery
-  const data = [];
+  const { data } = useQuery("posts", fetchPosts); // 인자1: 쿼리 키, 인자2: 쿼리 함수
+  if (!data) return <div />;
 
   return (
     <>
