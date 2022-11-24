@@ -27,15 +27,15 @@ export function Posts() {
   }, [currentPage, queryClient]);
 
   // replace with useQuery
-  const { data, isError, error, isLoading } = useQuery(
+  const { data, isError, error, isLoading, isFetching } = useQuery(
     ["posts", currentPage],
     () => fetchPosts(currentPage),
     {
-      staleTime: 2000,
+      // staleTime: 2000,
       keepPreviousData: true, // 이전 페이지로 돌아갔을 때에도 캐시 유지하고 싶음
     }
   ); // 인자1: 쿼리 키, 인자2: 쿼리 함수
-  if (isLoading) return <h3>Loading...</h3>;
+  if (isFetching) return <h3>Fetching in progress...</h3>;
   if (isError)
     return (
       <>
