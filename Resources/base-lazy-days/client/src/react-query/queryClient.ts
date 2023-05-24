@@ -20,6 +20,11 @@ export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       onError: queryErrorHandler,
+      staleTime: 600000, // 10 minutes
+      cacheTime: 900000, // 15 minutes (기본값은 5분. 근데 캐시된 데이터 없으면 데이터 만료되었을때 임시로 보여줄 데이터가 없음. 그래서 늘려줌)
+      refetchOnMount: false,
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: false,
     },
   },
 });
