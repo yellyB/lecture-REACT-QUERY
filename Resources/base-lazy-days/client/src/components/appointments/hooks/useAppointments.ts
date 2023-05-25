@@ -16,6 +16,16 @@ import { AppointmentDateMap } from '../types';
 import { getAvailableAppointments } from '../utils';
 import { getMonthYearDetails, getNewMonthYear, MonthYear } from './monthYear';
 
+/**
+ * useQuery 와 prefetchQuery 에 공통으로 사용하는 옵션
+ * refatch~ 옵션들은 프리페칭에 적용 안되지만
+ * staleTiem, cacheTime은 적용됨.
+ */
+const commonOptions = {
+  staleTime: 0,
+  cacheTime: 300000, // 기본인 5분
+};
+
 // for useQuery call
 async function getAppointments(
   year: string,
@@ -84,6 +94,7 @@ export function useAppointments(): UseAppointments {
     queryClient.prefetchQuery(
       [queryKeys.appointments, nextMonthYear.year, nextMonthYear.month],
       () => getAppointments(nextMonthYear.year, nextMonthYear.month),
+      commonOptions,
     );
   }, [queryClient, monthYear]);
 
@@ -94,13 +105,20 @@ export function useAppointments(): UseAppointments {
   //
   //    2. The getAppointments query function needs monthYear.year and
   //       monthYear.month
+
   const fallback = {};
 
+  // appointment 는 자주 데이터 업데이트 하지 않게 전역으로 설정했던 설정을 사용하면 안됨
+  // 자주 업뎃 되도록 개별 설정
   const { data: appointments = fallback } = useQuery(
     [queryKeys.appointments, monthYear.year, monthYear.month],
     () => getAppointments(monthYear.year, monthYear.month),
     {
       select: showAll ? undefined : selectFn,
+      ...commonOptions,
+      refetchOnMount: true,
+      refetchOnWindowFocus: true,
+      refetchOnReconnect: true,
     },
   );
 
