@@ -119,6 +119,7 @@ export function useAppointments(): UseAppointments {
       refetchOnMount: true,
       refetchOnWindowFocus: true,
       refetchOnReconnect: true,
+      refetchInterval: 60000, // 폴링 간격 1분
     },
   );
 
