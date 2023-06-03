@@ -1,11 +1,12 @@
 import { Spinner, Text } from '@chakra-ui/react';
 import { ReactElement } from 'react';
-import { useIsFetching } from 'react-query';
+import { useIsFetching, useIsMutating } from 'react-query';
 
 export function Loading(): ReactElement {
   const isFetching = useIsFetching();
+  const isMutating = useIsMutating(); // 현재 해결되지 않은 변이 함수 개수를 볼 수 있음
 
-  const display = isFetching ? 'inherit' : 'none';
+  const display = isFetching || isMutating ? 'inherit' : 'none';
 
   return (
     <Spinner
