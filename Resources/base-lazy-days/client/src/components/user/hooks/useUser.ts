@@ -48,7 +48,7 @@ export function useUser(): UseUser {
   // meant to be called from useAuth
   function clearUser() {
     queryClient.setQueriesData(queryKeys.user, null);
-    queryClient.removeQueries('user-appointments'); // useUserAppointments 에 사용한 쿼리 키
+    queryClient.removeQueries([queryKeys.appointments, queryKeys.user]); // useUserAppointments 에 사용한 쿼리 키
   }
 
   return { user, updateUser, clearUser };
